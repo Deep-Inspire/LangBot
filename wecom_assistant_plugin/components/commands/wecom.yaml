@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Command
+metadata:
+  name: wecom
+  label:
+    en_US: Wecom
+    zh_Hans: Wecom
+  description:
+    en_US: 'Utilities for validating WeCom configuration and quick messaging.'
+    zh_Hans: '企业微信配置验证与便捷消息发送工具命令。'
+spec:
+execution:
+  python:
+    path: wecom.py
+    attr: Wecom
