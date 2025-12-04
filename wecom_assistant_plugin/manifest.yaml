@@ -1,83 +1,21 @@
 apiVersion: v1
 kind: Plugin
 metadata:
-  author: codex
-  name: wecom-assistant
-  repository: 'https://github.com/codex/wecom-assistant'
+  author: chenwu
+  name: wecom_assistant_plugin
+  repository: ''
   version: 0.1.0
   description:
-    en_US: 'WeCom operations assistant plugin for LangBot, providing messaging and user utilities.'
-    zh_Hans: '企业微信运维助手插件，提供消息发送与用户查询能力。'
+    en_US: 'LangBot plugin for WeCom information collection and reply interception'
+    zh_Hans: 'LangBot plugin for WeCom information collection and reply interception'
   label:
-    en_US: WecomAssistant
-    zh_Hans: WecomAssistant
-  icon: assets/icon.svg
+    en_US: wecom assistant plugin
+    zh_Hans: wecom assistant plugin
+  icon: assets/icon.svg  # replace in assets/icon.svg
 spec:
-  config:
-    - name: corp_id
-      type: string
-      label:
-        en_US: Corp ID
-        zh_Hans: 企业ID
-      description:
-        en_US: Enterprise WeChat corp_id from the management console.
-        zh_Hans: 企业微信管理后台的企业ID（corpid）。
-      required: true
-    - name: agent_secret
-      type: string
-      label:
-        en_US: Agent Secret
-        zh_Hans: 应用Secret
-      description:
-        en_US: Secret for the internal app used to send messages.
-        zh_Hans: 用于发送消息的自建应用Secret。
-      required: true
-    - name: agent_id
-      type: integer
-      label:
-        en_US: Agent ID
-        zh_Hans: 应用AgentID
-      description:
-        en_US: AgentID of the internal app that will send notifications.
-        zh_Hans: 用于发送通知的企业微信自建应用AgentID。
-      required: true
-    - name: contacts_secret
-      type: string
-      label:
-        en_US: Contacts Secret (optional)
-        zh_Hans: 通讯录Secret（可选）
-      description:
-        en_US: Optional secret for contact-scoped token to read user profiles.
-        zh_Hans: 可选，使用通讯录Secret获取更完整的用户信息。
-      required: false
-    - name: base_url
-      type: string
-      label:
-        en_US: API Base URL
-        zh_Hans: API 基础地址
-      description:
-        en_US: Base URL for WeCom API, normally https://qyapi.weixin.qq.com
-        zh_Hans: 企业微信开放接口基础地址，通常为 https://qyapi.weixin.qq.com。
-      default: 'https://qyapi.weixin.qq.com'
-      required: false
-    - name: safe_mode
-      type: boolean
-      label:
-        en_US: Safe Mode (Encrypt Messages)
-        zh_Hans: 安全模式（加密消息）
-      description:
-        en_US: When true, messages are sent with safe=1 so WeCom enforces content review/encryption.
-        zh_Hans: 发送消息时传递 safe=1，开启企业微信的内容加密/审查。
-      default: false
-      required: false
-  components:
-    Tool:
-      fromDirs:
-        - path: components/tools/
-    Command:
-      fromDirs:
-        - path: components/commands/
+  config: []
+  components: {}
 execution:
   python:
     path: main.py
-    attr: WecomAssistantPlugin
+    attr: wecomassistantplugin
