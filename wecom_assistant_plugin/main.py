@@ -4,12 +4,40 @@ from __future__ import annotations
 
 from langbot_plugin.api.definition.plugin import BasePlugin
 
-class wecomassistantplugin(BasePlugin):
 
-    async def initialize(self) -> None:
-        # Will be called when plugin is launching
-        pass
+class WecomAssistantPlugin(BasePlugin):
+    """入口类：保持简单，把逻辑放在组件里即可。"""
 
-    def __del__(self) -> None:
-        # Will be called when plugin is terminating
-        pass
+    def __init__(self, ctx):
+        super().__init__(ctx)
+        # 给 Redis 客户端留个缓存位
+        self._redis = None
+
+    async def get_redis(self):
+        """
+        懒加载 Redis 连接（async 版本）。
+        在组件中通过 self.plugin.get_redis() 调用。
+        """
+        if self._redis is None:
+            import redis.asyncio as redis
+
+            cfg = self.get_config()  # 从 manifest.yaml 读取配置:contentReference[oaicite:9]{index=9}
+            redis_url = cfg.get("redis_url") or "redis://127.0.0.1:6379/0"
+
+            # decode_responses=True 保证返回 str，方便 json
+            self._redis = redis.from_url(
+                redis_url,
+                encoding="utf-8",
+                decode_responses=True,
+            )
+
+        return self._redis
+
+    async def on_unload(self):
+        """
+        插件卸载时关闭 Redis 连接（如果 LangBot 的 Runtime 会调用这个 hook）。
+        """
+        if self._redis is not None:
+            await self._redis.close()
+            self._redis = None
+

@@ -3,19 +3,38 @@ kind: Plugin
 metadata:
   author: chenwu
   name: wecom_assistant_plugin
-  repository: ''
+  repository: 'https://github.com/langbot-app/LangBot'
   version: 0.1.0
   description:
-    en_US: 'LangBot plugin for WeCom information collection and reply interception'
-    zh_Hans: 'LangBot plugin for WeCom information collection and reply interception'
+    en_US: LangBot plugin for WeCom message context capture and reply interception
+    zh_Hans: 企业微信消息上下文采集与回复拦截的 LangBot 插件
   label:
-    en_US: wecom assistant plugin
-    zh_Hans: wecom assistant plugin
-  icon: assets/icon.svg  # replace in assets/icon.svg
+    en_US: WeCom Assistant Plugin
+    zh_Hans: 企业微信助手插件
+  icon: assets/icon.svg
 spec:
-  config: []
-  components: {}
+  config:
+    - name: redis_url
+      type: string
+      label:
+        en_US: Redis URL
+        zh_Hans: Redis 连接 URL
+      description:
+        en_US: 'e.g. redis://:password@127.0.0.1:6379/0'
+        zh_Hans: '形如 redis://:password@127.0.0.1:6379/0'
+      required: true
+
+    - name: redis_key
+      type: string
+      label:
+        en_US: Redis List Key
+        zh_Hans: Redis 列表 Key
+      description:
+        en_US: 'List key to push logs to'
+        zh_Hans: '用于存储日志的 Redis 列表 Key'
+      default: 'langbot:wecom:llm_replies'
+      required: false
 execution:
   python:
     path: main.py
-    attr: wecomassistantplugin
+    attr: WecomAssistantPlugin
