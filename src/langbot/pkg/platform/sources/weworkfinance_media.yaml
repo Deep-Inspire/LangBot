@@ -85,5 +85,5 @@ spec:
         maximum: 86400
 execution:
   python:
-    path: pkg/platform/sources/weworkfinance_media.py
+    path: ./weworkfinance.py
     attr: WeWorkFinanceMediaAdapter

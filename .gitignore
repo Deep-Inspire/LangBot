@@ -53,3 +53,4 @@ src/langbot/web/
 /dist
 /build
 *.egg-info
+*.pem

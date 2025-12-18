@@ -63,5 +63,5 @@ spec:
         default: "data/wework_finance_seq.txt"
 execution:
   python:
-    path: pkg/platform/sources/weworkfinance.py
+    path: ./weworkfinance.py
     attr: WeWorkFinanceAdapter
