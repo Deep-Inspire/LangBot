@@ -1,0 +1,67 @@
+apiVersion: v1
+kind: MessagePlatformAdapter
+metadata:
+  name: weworkfinance
+  label:
+    zh_Hans: 企业微信会话存档
+    en_US: WeWork Finance Archive
+spec:
+  description:
+    zh_Hans: 企业微信会话存档轮询适配器，通过轮询方式拉取会话存档消息（只读模式）
+    en_US: WeWork Finance Archive polling adapter for retrieving chat archive messages (read-only mode)
+  config_schema:
+    type: object
+    required:
+      - corpid
+      - secret
+    properties:
+      corpid:
+        type: string
+        description:
+          zh_Hans: 企业 ID
+          en_US: Corporation ID
+      secret:
+        type: string
+        description:
+          zh_Hans: 会话存档的 secret
+          en_US: Finance archive secret
+      rsa_private_key_path:
+        type: string
+        description:
+          zh_Hans: RSA 私钥文件路径（用于解密消息内容）
+          en_US: RSA private key file path (for decrypting messages)
+        default: "rsa_private.pem"
+      polling_interval:
+        type: integer
+        description:
+          zh_Hans: 轮询间隔（秒）
+          en_US: Polling interval (seconds)
+        default: 5
+        minimum: 1
+        maximum: 60
+      batch_limit:
+        type: integer
+        description:
+          zh_Hans: 每次拉取的消息数量
+          en_US: Number of messages to fetch per request
+        default: 100
+        minimum: 1
+        maximum: 1000
+      timeout:
+        type: integer
+        description:
+          zh_Hans: API 超时时间（秒）
+          en_US: API timeout (seconds)
+        default: 10
+        minimum: 5
+        maximum: 60
+      seq_save_path:
+        type: string
+        description:
+          zh_Hans: seq 游标保存路径
+          en_US: Seq cursor save path
+        default: "data/wework_finance_seq.txt"
+execution:
+  python:
+    path: pkg/platform/sources/weworkfinance.py
+    attr: WeWorkFinanceAdapter
